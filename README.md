@@ -14,7 +14,10 @@ Due to difficulties getting PL-only ethernet processing on the Xilinx KR260, I'v
 Tests have been created with cocotb, a python HDL verification library, and run with pytest. Cocotb is a fast growing verification platform, which is touted for its flexibility and compatibility with commercial and free toolchains.
 
 To run tests, make sure necessary packages are installed, navigate to tb/uart, and run
-`pytest -o log_cli=True test.py`
+`make tests`
+
+To clean test output:
+`make clean`
 
 The tests are automated, and will eventually be baked into a CI flow. Waveforms are still useful though, and they will be generated as `vcf` files in the test's `_sim` directory and can be viewed with GTKWave.
 
