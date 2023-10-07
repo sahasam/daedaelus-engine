@@ -1,30 +1,26 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 10/02/2023 02:38:57 PM
-// Design Name: Uart Module
-// Module Name: uart
-// Project Name: Uart Test Module 
-// Target Devices: 
-// Tool Versions: 
-// Description: Simple 8 bit Uart Interface. Send and receive 8 bits at
-// a time. 115200 Baud
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+// Sahas Munamala
+// Created: Sat Oct 07 2023, 01:09PM PDT
 
+// Module: uart
+// Purpose: UART Implementation Top Module. This module
+// Just routes wires to uart_rx and uart_tx modules that
+// contain all the logic. AXI Streams serve as input and output
+// for the module
+module uart #(
+    // # of clock cycles between bits on the wire
+    // 10MHz -> 115200 Baud is (10000000/115200) ~= 87
+    // Doesn't need to be perfect, just accurate enough
+    // to last the entire frame width
+    parameter TICKS_PER_BIT=87,
 
-module uart(
+    // number of bits in a single uart frame. Standard
+    // is 8, but my special case requries 64 bit slices.
+    parameter FRAME_WIDTH=64
+)
+(
     input                   clk,
     input                   rx,
-    output	                tx,			
+    output                  tx,
 
     // input axi stream
     input  wire [7:0]       s_axis_din_tdata,
@@ -35,6 +31,30 @@ module uart(
     output wire [7:0]       m_axis_dout_tdata,
     input  wire             m_axis_dout_tready,
     output wire             m_axis_dout_tvalid
+);
+
+uart_rx #(
+    .TICKS_PER_BIT(87),
+    .FRAME_WIDTH(64)
+) uart_rx_inst (
+    .clk(clk),
+    .rx(rx),
+
+    .m_axis_rx_tdata  (m_axis_dout_tdata),
+    .m_axis_rx_tready (m_axis_dout_tready),
+    .m_axis_rx_tvalid (m_axis_dout_tvalid)
+);
+
+uart_tx #(
+    .TICKS_PER_BIT(87),
+    .FRAME_WIDTH(64)
+) uart_tx_inst (
+    .clk(clk),
+    .tx(tx),
+
+    .m_axis_rx_tdata  (m_axis_din_tdata),
+    .m_axis_rx_tready (m_axis_din_tready),
+    .m_axis_rx_tvalid (m_axis_din_tvalid)
 );
 
 endmodule
