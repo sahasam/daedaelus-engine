@@ -4,8 +4,7 @@
 
 
 import logging
-
-from uart_interface import UartSink
+import random
 
 import cocotb
 from cocotb.binary import BinaryValue
@@ -13,7 +12,8 @@ from cocotb.clock import Clock
 from cocotb.queue import Queue
 from cocotb.triggers import FallingEdge, RisingEdge, Event, Timer
 
-import random
+from uart_interface import UartSink
+
 
 class TB:
     def __init__(self, dut):
