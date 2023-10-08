@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: BSD-2-Clause-Views
-# Copyright (c) 2019-2023 The Regents of the University of California
+# Sahas Munamala
+# Created: Sun Oct 08 2023, 12:47PM PDT
 
 # FPGA settings
 FPGA_PART = xck26-sfvc784-2LV-c
@@ -8,27 +8,30 @@ FPGA_ARCH = zynquplus
 
 # Files for synthesis
 SYN_FILES = rtl/fpga.v
-SYN_FILES += rtl/fpga_core.v
-SYN_FILES += rtl/sync_signal.v
 
 # XDC files
-XDC_FILES = fpga.xdc
-#XDC_FILES += lib/axis/syn/vivado/axis_async_fifo.tcl
-#XDC_FILES += lib/axis/syn/vivado/sync_reset.tcl
-#XDC_FILES += lib/eth/syn/vivado/ptp_clock_cdc.tcl
-#XDC_FILES += ../../../common/syn/vivado/mqnic_port.tcl
-#XDC_FILES += ../../../common/syn/vivado/mqnic_ptp_clock.tcl
-#XDC_FILES += ../../../common/syn/vivado/mqnic_rb_clk_info.tcl
-#XDC_FILES += ../../../common/syn/vivado/rb_drp.tcl
-#XDC_FILES += ../../../common/syn/vivado/eth_xcvr_phy_10g_gty_wrapper.tcl
-#XDC_FILES += ../../../common/syn/vivado/tdma_ber_ch.tcl
+XDC_FILES = xdc/fpga.xdc
 
-# IP
-#IP_TCL_FILES = ip/zynq_ps.tcl
+# Project Specific Configuration
+PROJ_TCL = 
+
+# Create IP
+IP_TCL_FILES = ip/zynq_ps.tcl
 #IP_TCL_FILES += ip/eth_xcvr_gth.tcl
 
 # Configuration
 CONFIG_TCL_FILES = ./config.tcl
+
+
+
+
+
+
+
+###########################################################
+# DO NOT MODIFY
+# SPDX-License-Identifier: BSD-2-Clause-Views
+# Copyright (c) 2019-2023 The Regents of the University of California
 
 include ../common/vivado.mk
 
