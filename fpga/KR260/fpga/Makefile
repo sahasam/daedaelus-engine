@@ -12,15 +12,11 @@ SYN_FILES = rtl/fpga.v
 # XDC files
 XDC_FILES = xdc/fpga.xdc
 
-# Project Specific Configuration
-PROJ_TCL = 
-
-# Create IP
+# IP
 IP_TCL_FILES = ip/zynq_ps.tcl
-#IP_TCL_FILES += ip/eth_xcvr_gth.tcl
 
 # Configuration
-CONFIG_TCL_FILES = ./config.tcl
+#CONFIG_TCL_FILES = ./config.tcl
 
 
 

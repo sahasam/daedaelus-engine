@@ -1,0 +1,8 @@
+/dts-v1/;
+/plugin/;
+&fpga_full {
+	firmware-name = "fpga.bin";
+	pid = <0x0>;
+	uid = <0x0>;
+};
+
