@@ -1,0 +1,17 @@
+# Sahas Munamala
+# Mon Oct 09 2023, 03:03PM PDT
+
+[verilog]
+include_paths = ["rtl/uart", "fpga/KR260/rtl"]
+defines = ["DEBUG", "VAR=1"]
+plugins = []
+
+[option]
+linter = true
+
+[textrules]
+style_indent = true
+style_textwidth = true
+
+[syntaxrules]
+non_ansi_module = true

@@ -19,12 +19,9 @@ module fpga
 );
 
 // Clock and reset
-wire zynq_pl_clk;
-wire zynq_pl_reset;
-
 wire clk_25mhz_int;
 
-// Internal 125 MHz clock
+// Internal 10 MHz clock
 wire clk_10mhz_int;
 wire clk_10mhz_mmcm_out;
 
@@ -91,19 +88,53 @@ clk_10mhz_bufg_inst (
     .O(clk_10mhz_int)
 );
 
-/*
-sync_reset #(
-    .N(4)
-)
-sync_reset_125mhz_inst (
-    .clk(clk_125mhz_int),
-    .rst(~mmcm_locked),
-    .out(rst_125mhz_int)
-);
-*/
-
+/* Zynq Design. This module is generated through Vivado Block Designer
+ * in ip/zynq_ps.tcl
+ */
 zynq_ps zynq_ps_inst ();
 
+
+wire     rx;
+wire     tx;
+
+wire     axis_din_tdata;
+wire     axis_din_tready;
+wire     axis_din_tvalid;
+
+wire     axis_dout_tdata;
+wire     axis_dout_tready;
+wire     axis_dout_tvalid;
+
+uart_loopback uart_loopback_inst (
+    .clk     (clk_10mhz_int),
+
+    .m_axis_din_tdata       (axis_din_tdata),
+    .m_axis_din_tready      (axis_din_tready),
+    .m_axis_din_tvalid      (axis_din_tvalid),
+
+    .s_axis_dout_tdata      (axis_dout_tdata),
+    .s_axis_dout_tready     (axis_dout_tready),
+    .s_axis_dout_tvalid     (axis_dout_tvalid)
+);
+
+uart #(
+    .TICKS_PER_BIT(87),
+    .FRAME_WIDTH(8)
+) uart_inst_0 (
+    .clk     (clk_10mhz_int),
+    .rx      (rx),
+    .tx      (tx),
+
+    .s_axis_din_tdata       (axis_din_tdata),
+    .s_axis_din_tready      (axis_din_tready),
+    .s_axis_din_tvalid      (axis_din_tvalid),
+
+    .m_axis_dout_tdata      (axis_dout_tdata),
+    .m_axis_dout_tready     (axis_dout_tready),
+    .m_axis_dout_tvalid     (axis_dout_tvalid)
+);
+
 endmodule
+
 
 `resetall
