@@ -1,5 +1,12 @@
 # Created: Thu Oct 05 2023, 10:07PM PDT
+# Added build outputs Tue Oct 31 2023, 04:56PM PDT
 
+# dev outputs
 **/__pycache__
 **/*_sim
 **/.cocotb-results
+
+# build outputs
+*.bit
+*.bin
+*.xsa
