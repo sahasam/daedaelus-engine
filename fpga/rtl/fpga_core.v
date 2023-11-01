@@ -1,6 +1,6 @@
-//------------------------------------------------------------------------------
-// File       : tri_mode_ethernet_mac_0_example_design.v
-// Author     : Xilinx Inc.
+// (c) Copyright 2023 Daedaelus, Inc.
+// Created: Tue Oct 31 2023, 05:54PM PDT
+//
 // -----------------------------------------------------------------------------
 // (c) Copyright 2004-2013 Xilinx, Inc. All rights reserved.
 //
@@ -48,13 +48,12 @@
 // THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
 // PART OF THIS FILE AT ALL TIMES.
 // -----------------------------------------------------------------------------
-// Description:  This is the Verilog example design for the Tri-Mode
+// Description:  This is a modified Verilog example design for the Tri-Mode
 //               Ethernet MAC core. It is intended that this example design
 //               can be quickly adapted and downloaded onto an FPGA to provide
 //               a real hardware test environment.
 //
 //               This level:
-//
 //               * Instantiates the FIFO Block wrapper, containing the
 //                 block level wrapper and an RX and TX FIFO with an
 //                 AXI-S interface;
@@ -79,14 +78,14 @@
 //               the Tri-Mode Ethernet MAC User Gude for further information.
 //
 //    --------------------------------------------------
-//    | EXAMPLE DESIGN WRAPPER                         |
-//    |                                                |
+//    | FPGA_CORE                                      |
 //    |                                                |
 //    |   -------------------     -------------------  |
 //    |   |                 |     |                 |  |
 //    |   |    Clocking     |     |     Resets      |  |
 //    |   |                 |     |                 |  |
 //    |   -------------------     -------------------  |
+//    |                                                |
 //    |           -------------------------------------|
 //    |           |FIFO BLOCK WRAPPER                  |
 //    |           |                                    |
@@ -116,8 +115,7 @@
 //    | |      |  |  |        |  |                     |
 //    | --------  |  ----------  |                     |
 //    |           |              |                     |
-//    |           |              ----------------------|
-//    |           -------------------------------------|
+//    |           |              ----------------------| |           -------------------------------------|
 //    --------------------------------------------------
 
 //------------------------------------------------------
@@ -130,14 +128,15 @@
 //------------------------------------------------------------------------------
 
 (* DowngradeIPIdentifiedWarnings = "yes" *)
-module tri_mode_ethernet_mac_0_example_design
+module fpga_core
    (
       // asynchronous reset
       input         glbl_rst,
 
       // 25MHz clock input from board
       input         clk_25mhz_ref,
-      // 125 MHz clock from MMCM
+
+      // 125MHz clock output (testbench only)
       output        gtx_clk_bufg_out,
 
       output        phy_gem2_resetn,
@@ -145,17 +144,11 @@ module tri_mode_ethernet_mac_0_example_design
 
       // RGMII Interface
       //----------------
-      (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 RGMII_GEM2 TD" *)
       output [3:0]  rgmii_gem2_txd,
-      (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 RGMII_GEM2 TX_CTL" *)
       output        rgmii_gem2_tx_ctl,
-      (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 RGMII_GEM2 TXC" *)
       output        rgmii_gem2_txc,
-      (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 RGMII_GEM2 RD" *)
       input  [3:0]  rgmii_gem2_rxd,
-      (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 RGMII_GEM2 RX_CTL" *)
       input         rgmii_gem2_rx_ctl,
-      (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 RGMII_GEM2 RXC" *)
       input         rgmii_gem2_rxc,
 
       
@@ -164,34 +157,9 @@ module tri_mode_ethernet_mac_0_example_design
       inout         mdio,
       output        mdc,
       
+      // Debug Signals
       output        debug_1,
       output        debug_2
-
-
-      // Serialised statistics vectors
-      //------------------------------
-//      output        tx_statistics_s,
-//      output        rx_statistics_s,
-
-      // Serialised Pause interface controls
-      //------------------------------------
-//      input         pause_req_s,
-
-      // Main example design controls
-      //-----------------------------
-//      input  [1:0]  mac_speed,
-//      input         update_speed,
-      //input         serial_command, // tied to pause_req_s
-//      input         config_board,
-//      output        serial_response,
-//      input         gen_tx_data,
-//      input         chk_tx_data,
-//      input         reset_error,
-//      output        frame_error,
-//      output        frame_errorn,
-//      output        activity_flash,
-//      output        activity_flashn
-
     );
 
    //----------------------------------------------------------------------------
